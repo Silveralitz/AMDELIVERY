@@ -2,6 +2,14 @@ const orderList = document.getElementById('orderList');
 const orderTotal = document.getElementById('orderTotal');
 const checkoutForm = document.getElementById('checkoutForm');
 const themeToggle = document.getElementById('themeToggle');
+const orderFeedback = document.getElementById('orderFeedback');
+const submitButton = checkoutForm.querySelector('button[type="submit"]');
+
+function showFeedback(message, type = 'success') {
+    orderFeedback.textContent = message;
+    orderFeedback.className = `order-feedback ${type}`;
+    orderFeedback.hidden = false;
+}
 
 function loadOrder() {
     const storedCart = localStorage.getItem('cart');
@@ -41,9 +49,12 @@ checkoutForm.addEventListener('submit', async (event) => {
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     if (cart.length === 0) {
-        alert('Tu carrito está vacío. Agrega productos antes de finalizar la compra.');
+        showFeedback('Tu carrito está vacío. Agrega productos antes de finalizar la compra.', 'error');
         return;
     }
+
+    submitButton.disabled = true;
+    submitButton.textContent = 'Enviando pedido...';
 
     const order = {
         customer: datos,
@@ -67,11 +78,15 @@ checkoutForm.addEventListener('submit', async (event) => {
         }
 
         localStorage.removeItem('cart');
-        alert(`Gracias, ${datos.nombre}! Tu pedido de $${total} se ha enviado correctamente.`);
-        window.location.href = 'index.html';
+        checkoutForm.reset();
+        loadOrder();
+        showFeedback(`Gracias, ${datos.nombre}! Tu pedido de $${total} se ha enviado correctamente. También recibirás un resumen por correo y el responsable del negocio lo recibirá.`);
     } catch (error) {
-        alert(error.message || 'No se pudo enviar el pedido. Intenta de nuevo más tarde.');
+        showFeedback(error.message || 'No se pudo enviar el pedido. Intenta de nuevo más tarde.', 'error');
         console.error(error);
+    } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Enviar pedido';
     }
 });
 

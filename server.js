@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
@@ -5,6 +7,14 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Verificar si las credenciales SMTP están configuradas
+const SMTP_CONFIGURED = process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS;
+
+if (!SMTP_CONFIGURED) {
+  console.warn('⚠️  Variables SMTP no configuradas. Copia .env.example a .env y configura tus credenciales.');
+  console.warn('📧 Los correos NO se enviarán hasta que se configure correctamente.');
+}
 
 app.use(cors());
 app.use(express.json());
@@ -62,16 +72,6 @@ function getRecipientEmails(order) {
 }
 
 async function sendOrderEmails(order) {
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST || 'smtp.example.com',
-    port: process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : 587,
-    secure: false,
-    auth: {
-      user: process.env.SMTP_USER || 'user@example.com',
-      pass: process.env.SMTP_PASS || 'password'
-    }
-  });
-
   const { responsibleEmail, customerEmail } = getRecipientEmails(order);
   const recipients = [...new Set([responsibleEmail, customerEmail].filter(Boolean))];
 
@@ -79,7 +79,26 @@ async function sendOrderEmails(order) {
     throw new Error('No hay destinatarios para enviar el pedido.');
   }
 
-  const sender = process.env.SMTP_FROM || 'BotellasUY <no-reply@botellasuy.com>';
+  // Modo de prueba: simular envío sin credenciales SMTP
+  if (!SMTP_CONFIGURED) {
+    console.log('\n📧 [MODO PRUEBA] Pedido listo para enviar:');
+    console.log(`   → Responsable: ${responsibleEmail}`);
+    if (customerEmail) console.log(`   → Cliente: ${customerEmail}`);
+    console.log(`   → Total: $${order.total}\n`);
+    return;
+  }
+
+  const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: Number(process.env.SMTP_PORT || 587),
+    secure: process.env.SMTP_SECURE === 'true',
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS
+    }
+  });
+
+  const sender = process.env.SMTP_FROM || `BotellasUY <${process.env.SMTP_USER}>`;
   const mailHtml = buildOrderEmailHtml(order);
 
   const emailPromises = recipients.map((email, index) => {
@@ -108,10 +127,13 @@ app.post('/api/order', async (req, res) => {
 
   try {
     await sendOrderEmails(order);
-    return res.status(200).json({ message: 'Pedido enviado correctamente.' });
+    const message = SMTP_CONFIGURED
+      ? 'Pedido enviado correctamente.'
+      : 'Pedido guardado en modo prueba. Configura las credenciales SMTP en .env para enviar correos reales.';
+    return res.status(200).json({ message });
   } catch (error) {
-    console.error('Error enviando el correo:', error);
-    return res.status(500).json({ message: 'No se pudo enviar el pedido por correo.' });
+    console.error('Error procesando el pedido:', error.message);
+    return res.status(500).json({ message: error.message || 'No se pudo procesar el pedido.' });
   }
 });
 

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BotellasUY | Productos Premium</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="ageGate" class="age-gate-overlay">
+    <div class="age-gate-card">
+        <h2>Página para mayores de 18 años</h2>
+        <p>Debes ser mayor de 18 años para ingresar a este sitio.</p>
+        <div class="age-gate-actions">
+            <button id="ageGateYes" class="action-btn primary">Sí, ingresar</button>
+            <button id="ageGateNo" class="action-btn secondary">No, salir</button>
+        </div>
+    </div>
+</div>
+
+<header class="site-header">
+    <div class="logo">
+        <h1>BotellasUY</h1>
+        <p>Alcohol al mejor precio</p>
+    </div>
+
+    <div class="header-actions">
+        <label class="search-box" for="searchInput">
+            <span>🔎</span>
+            <input id="searchInput" type="text" placeholder="Buscar producto o bebida...">
+        </label>
+        <button id="themeToggle" class="icon-btn" aria-label="Cambiar tema">🌙</button>
+        <button id="favoritesToggle" class="icon-btn" data-count="0" aria-label="Favoritos">♡</button>
+        <button id="cartToggle" class="icon-btn" data-count="0" aria-label="Carrito">🛒</button>
+    </div>
+</header>
+
+<nav class="top-nav">
+    <a href="#banner">Inicio</a>
+    <a href="#productos">Productos</a>
+    <a href="#ofertas">Ofertas</a>
+    
+</nav>
+
+<section id="banner" class="banner">
+    <h2>Descubre tu próxima bebida favorita</h2>
+    
+    <button id="scrollProducts">Ver Productos</button>
+</section>
+
+<section class="categorias">
+    <div class="categoria"><h3>Whisky</h3></div>
+    <div class="categoria"><h3>Vodka</h3></div>
+    <div class="categoria"><h3>Gin</h3></div>
+    <div class="categoria"><h3>Jagermeister</h3></div>
+</section>
+
+<section class="filters-section">
+    <div class="filter-group">
+        <label>
+            Categoría
+            <select id="categoryFilter">
+                <option value="all">Todas</option>
+            </select>
+        </label>
+        <label>
+            Marca
+            <select id="brandFilter">
+                <option value="all">Todas</option>
+            </select>
+        </label>
+        <label>
+            Sabor
+            <select id="flavorFilter">
+                <option value="all">Todos</option>
+            </select>
+        </label>
+    </div>
+    <div id="chipList" class="chip-list">
+        <button class="chip active" data-category="all">Todos</button>
+        <button class="chip" data-category="Whisky">Whisky</button>
+        <button class="chip" data-category="Vodka">Vodka</button>
+        <button class="chip" data-category="Jager">Jäger</button>
+        <button class="chip" data-category="Gin">Gin</button>
+        <button class="chip" data-category="Fernet">Fernet</button>
+    </div>
+</section>
+
+<section id="productos" class="productos">
+    <h2>Productos destacados</h2>
+    <div id="productsGrid" class="contenedor-productos"></div>
+</section>
+
+<section id="ofertas" class="ofertas">
+    <h2>Ofertas destacadas</h2>
+    <div id="offersGrid" class="offers-grid"></div>
+</section>
+
+<section id="opiniones" class="reviews">
+   
+</section>
+
+<section class="info">
+    <h2>¿Por qué elegirnos?</h2>
+    <p>Envíos rápidos, atención personalizada, promociones exclusivas y productos seleccionados para disfrutar cada ocasión.</p>
+</section>
+
+<aside id="favoritesPanel" class="side-panel">
+    <div class="panel-header">
+        <h3>Favoritos</h3>
+        <button class="panel-close" data-panel="favorites">×</button>
+    </div>
+    <div id="favoritesList" class="panel-list"></div>
+</aside>
+
+<aside id="cartPanel" class="side-panel">
+    <div class="panel-header">
+        <h3>Carrito</h3>
+        <button class="panel-close" data-panel="cart">×</button>
+    </div>
+    <div id="cartList" class="panel-list"></div>
+    <div id="cartSummary" class="cart-summary">
+        <div class="summary-row">
+            <span>Subtotal</span>
+            <strong id="cartSubtotal">$0</strong>
+        </div>
+        <div class="summary-row">
+            <span>Total</span>
+            <strong id="cartTotal">$0</strong>
+        </div> 
+        <button id="checkoutBtn" class="action-btn primary">Finalizar compra</button>
+    </div>
+</aside>
+
+<a class="whatsapp-btn" href="https://wa.me/+598091646471" target="_blank" rel="noopener">📲</a>
+
+<footer>
+    <p>© 2026 Wine & Spirits</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

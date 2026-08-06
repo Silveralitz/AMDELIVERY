@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BotellasUY | Finalizar Compra</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+    <div class="logo">
+        <h1>BotellasUY</h1>
+        <p>Finalizar compra</p>
+    </div>
+    <div class="header-actions">
+        <button id="themeToggle" class="icon-btn" aria-label="Cambiar tema">🌙</button>
+        <a class="action-btn secondary" href="index.html">Volver a la tienda</a>
+    </div>
+</header>
+
+<nav class="top-nav">
+    <a href="index.html">Tienda</a>
+    <a href="checkout.html">Checkout</a>
+</nav>
+
+<main class="checkout-page">
+    <h2>Completa tus datos</h2>
+    <div class="checkout-grid">
+        <section class="checkout-form">
+            <h3>Datos de facturación y entrega</h3>
+            <form id="checkoutForm">
+                <label>
+                    Nombre*
+                    <input type="text" name="nombre" required>
+                </label>
+                <label>
+                    Apellido*
+                    <input type="text" name="apellido" required>
+                </label>
+                <label>
+                    Dirección de la calle*
+                    <input type="text" name="direccion" required placeholder="Número y nombre de la calle">
+                </label>
+                <label>
+                    País / Región*
+                    <input type="text" name="pais" required value="Uruguay">
+                </label>
+                <label>
+                    Barrio
+                    <input type="text" name="barrio" placeholder="Barrio">
+                </label>
+                <label>
+                    Departamento
+                    <input type="text" name="departamento" placeholder="Departamento">
+                </label>
+                <label>
+                    Código postal
+                    <input type="text" name="codigoPostal" placeholder="Código postal">
+                </label>
+                <label>
+                    Teléfono
+                    <input type="tel" name="telefono" placeholder="Ej: 099123456">
+                </label>
+                <label>
+                    Correo electrónico
+                    <input type="email" name="email" placeholder="correo@dominio.com">
+                </label>
+                <button type="submit" class="checkout-submit">Enviar pedido</button>
+            </form>
+        </section>
+
+        <aside class="order-summary">
+            <h3>Tu pedido</h3>
+            <div id="orderList"></div>
+            <div class="summary-total">
+                <span>Total</span>
+                <strong id="orderTotal">$0</strong>
+            </div>
+        </aside>
+    </div>
+</main>
+
+<footer>
+    <p>© 2026 Wine & Spirits</p>
+</footer>
+
+<script src="checkout.js" defer></script>
+</body>
+</html>

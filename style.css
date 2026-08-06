@@ -59,6 +59,28 @@ body {
     color: var(--muted);
 }
 
+.site-logo {
+    max-height: 72px;
+    width: auto;
+    display: block;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo-text {
+    font-size: 1.3rem;
+    color: var(--text);
+    white-space: nowrap;
+}
+
+.logo-text strong {
+    font-weight: 900;
+}
+
 .header-actions {
     display: flex;
     align-items: center;
@@ -150,7 +172,7 @@ body {
     text-align: center;
     padding: 24px;
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-        url("https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1400&q=80");
+        url("images/Logo.jpg");
     background-size: cover;
     background-position: center;
 }
@@ -179,9 +201,16 @@ body {
 .categorias {
     display: flex;
     justify-content: center;
-    gap: 25px;
-    padding: 56px 8%;
-    flex-wrap: wrap;
+    padding: 32px 8%;
+}
+
+.mapa-zonas {
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+    border-radius: 22px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
 }
 
 .categoria {

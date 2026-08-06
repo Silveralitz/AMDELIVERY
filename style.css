@@ -206,7 +206,7 @@ body {
 
 .mapa-zonas {
     width: 100%;
-    max-width: 1200px;
+    max-width: 900px;
     height: auto;
     border-radius: 22px;
     border: 1px solid var(--border);

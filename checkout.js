@@ -62,7 +62,16 @@ checkoutForm.addEventListener('submit', async (event) => {
         total
     };
 
-    const apiBase = window.API_BASE_URL || window.location.origin;
+    const localBackends = ['localhost', '127.0.0.1'];
+    const apiBase = window.API_BASE_URL || (localBackends.includes(window.location.hostname) ? 'http://localhost:3000' : null);
+
+    if (!apiBase) {
+        showFeedback('No se ha configurado una URL de backend pública. Para usar este checkout desde otro dispositivo debes definir window.API_BASE_URL con la URL de tu servidor de pedidos.', 'error');
+        submitButton.disabled = false;
+        submitButton.textContent = 'Enviar pedido';
+        return;
+    }
+
     const apiUrl = `${apiBase.replace(/\/$/, '')}/api/order`;
     console.log('Enviando pedido a', apiUrl);
 

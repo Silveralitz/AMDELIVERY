@@ -62,12 +62,8 @@ checkoutForm.addEventListener('submit', async (event) => {
         total
     };
 
-    const isLocalFile = window.location.protocol === 'file:';
-    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const hostForApi = isLocalFile || isLocalhost
-        ? 'localhost'
-        : window.location.hostname;
-    const apiUrl = `http://${hostForApi}:3000/api/order`;
+    const apiBase = window.API_BASE_URL || window.location.origin;
+    const apiUrl = `${apiBase.replace(/\/$/, '')}/api/order`;
     console.log('Enviando pedido a', apiUrl);
 
     try {

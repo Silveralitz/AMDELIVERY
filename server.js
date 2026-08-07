@@ -73,10 +73,9 @@ function getRecipientEmails(order) {
 
 async function sendOrderEmails(order) {
   const { responsibleEmail, customerEmail } = getRecipientEmails(order);
-  const recipients = [...new Set([responsibleEmail, customerEmail].filter(Boolean))];
 
-  if (recipients.length === 0) {
-    throw new Error('No hay destinatarios para enviar el pedido.');
+  if (!responsibleEmail) {
+    throw new Error('No hay correo del responsable configurado.');
   }
 
   // Modo de prueba: simular envío sin credenciales SMTP
@@ -101,21 +100,13 @@ async function sendOrderEmails(order) {
   const sender = process.env.SMTP_FROM || `BotellasUY <${process.env.SMTP_USER}>`;
   const mailHtml = buildOrderEmailHtml(order);
 
-  const emailPromises = recipients.map((email, index) => {
-    const subject = index === 0
-      ? `Nuevo pedido de ${order.customer.nombre} ${order.customer.apellido}`
-      : `Confirmación de tu pedido en BotellasUY`;
-
-    return transporter.sendMail({
-      from: sender,
-      to: email,
-      replyTo: responsibleEmail,
-      subject,
-      html: mailHtml
-    });
+  await transporter.sendMail({
+    from: sender,
+    to: responsibleEmail,
+    replyTo: customerEmail || sender,
+    subject: `Nuevo pedido de ${order.customer.nombre} ${order.customer.apellido}`,
+    html: mailHtml
   });
-
-  await Promise.all(emailPromises);
 }
 
 app.post('/api/order', async (req, res) => {

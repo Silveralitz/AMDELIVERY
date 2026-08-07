@@ -62,8 +62,17 @@ checkoutForm.addEventListener('submit', async (event) => {
         total
     };
 
+    const defaultApiBase = 'http://localhost:3000';
+    const apiBase = (window.location.protocol === 'file:' ||
+        window.location.hostname !== 'localhost' ||
+        window.location.port !== '3000')
+        ? defaultApiBase
+        : window.location.origin;
+    const apiUrl = `${apiBase}/api/order`;
+    console.log('Enviando pedido a', apiUrl);
+
     try {
-        const response = await fetch('/api/order', {
+        const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -71,10 +80,17 @@ checkoutForm.addEventListener('submit', async (event) => {
             body: JSON.stringify(order)
         });
 
-        const result = await response.json();
+        const responseText = await response.text();
+        let result = {};
+
+        try {
+            result = responseText ? JSON.parse(responseText) : {};
+        } catch {
+            result = { message: responseText || 'Error inesperado del servidor.' };
+        }
 
         if (!response.ok) {
-            throw new Error(result.message || 'Error al enviar el pedido.');
+            throw new Error(result.message || `Error del servidor: ${response.status}`);
         }
 
         localStorage.removeItem('cart');
@@ -83,7 +99,7 @@ checkoutForm.addEventListener('submit', async (event) => {
         showFeedback(`Gracias, ${datos.nombre}! Tu pedido de $${total} se ha enviado correctamente. También recibirás un resumen por correo y el responsable del negocio lo recibirá.`);
     } catch (error) {
         showFeedback(error.message || 'No se pudo enviar el pedido. Intenta de nuevo más tarde.', 'error');
-        console.error(error);
+        console.error('Fetch error:', error);
     } finally {
         submitButton.disabled = false;
         submitButton.textContent = 'Enviar pedido';

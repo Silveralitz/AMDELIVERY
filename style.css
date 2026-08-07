@@ -596,6 +596,25 @@ footer {
     border-top: 1px solid var(--border);
 }
 
+.footer-note {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: left;
+    font-size: 0.98rem;
+    color: var(--text);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 18px 22px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.footer-note p {
+    margin: 0;
+    line-height: 1.6;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
 .checkout-page {
     padding: 40px 8%;
     min-height: calc(100vh - 180px);

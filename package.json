@@ -1,5 +1,5 @@
 {
-  "name": "botellasuy-shop",
+  "name": "amdelivery-shop",
   "version": "1.0.0",
   "description": "Backend simple para enviar pedidos por correo desde el checkout.",
   "main": "server.js",

@@ -32,7 +32,7 @@ function buildOrderEmailHtml(order) {
 
   return `
     <div style="font-family: Arial, sans-serif; color: #1f2937; line-height: 1.5;">
-      <h2 style="color: #0f766e;">Nuevo pedido desde BotellasUY</h2>
+      <h2 style="color: #0f766e;">Nuevo pedido desde AMDELIVERY</h2>
       <p><strong>Cliente:</strong> ${order.customer.nombre} ${order.customer.apellido}</p>
       <p><strong>Dirección:</strong> ${order.customer.direccion}</p>
       <p><strong>País:</strong> ${order.customer.pais}</p>
@@ -56,7 +56,7 @@ function buildOrderEmailHtml(order) {
         </tbody>
       </table>
       <p style="margin-top: 16px;"><strong>Total:</strong> $${order.total}</p>
-      <p style="margin-top: 16px; color: #4b5563;">Este mensaje confirma un pedido realizado desde la tienda BotellasUY.</p>
+      <p style="margin-top: 16px; color: #4b5563;">Este mensaje confirma un pedido realizado desde la tienda AMDELIVERY.</p>
     </div>
   `;
 }
@@ -97,7 +97,7 @@ async function sendOrderEmails(order) {
     }
   });
 
-  const sender = process.env.SMTP_FROM || `BotellasUY <${process.env.SMTP_USER}>`;
+  const sender = process.env.SMTP_FROM || `AMDELIVERY <${process.env.SMTP_USER}>`;
   const mailHtml = buildOrderEmailHtml(order);
 
   await transporter.sendMail({

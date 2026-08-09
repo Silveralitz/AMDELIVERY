@@ -142,6 +142,7 @@ function renderProducts() {
     filtered.forEach(product => {
         const card = document.createElement('article');
         card.className = 'producto fade-in-item';
+        card.dataset.productId = product.id;
         card.innerHTML = `
             <img src="${product.images[0]}" alt="${product.name}" class="product-image">
             <div class="producto-body">
@@ -314,6 +315,23 @@ function addToCart(productId) {
     updateCounts();
     saveCart();
     renderPanel('cart');
+    showAddFeedback(productId);
+}
+
+function showAddFeedback(productId) {
+    const card = productsGrid.querySelector(`.producto[data-product-id="${productId}"]`);
+    if (!card) return;
+    const button = card.querySelector('button[data-action="cart"]');
+    if (!button) return;
+    const originalText = button.textContent;
+    button.textContent = 'Agregado';
+    button.disabled = true;
+    button.classList.add('added-button');
+    setTimeout(() => {
+        button.textContent = originalText;
+        button.disabled = false;
+        button.classList.remove('added-button');
+    }, 1800);
 }
 
 function removeFromFavorite(productId) {

@@ -305,11 +305,21 @@ body {
     transform: translateY(16px);
     animation: fadeInUp 0.45s ease forwards;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    position: relative;
 }
 
 .producto:hover, .offer-card:hover, .review-card:hover {
     transform: translateY(-4px);
     border-color: var(--accent);
+}
+
+.action-btn.added-button {
+    background: rgba(0, 217, 119, 0.95);
+    color: #052e16;
+}
+
+.action-btn.added-button:hover {
+    transform: translateY(-1px);
 }
 
 .producto img {

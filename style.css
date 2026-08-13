@@ -490,6 +490,8 @@ body {
     box-shadow: var(--shadow);
     border-left: 1px solid var(--border);
     padding: 18px;
+    display: flex;
+    flex-direction: column;
     z-index: 30;
     opacity: 0;
     transform: translateX(14px);
@@ -521,6 +523,21 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    overflow-y: auto;
+    flex: 1 1 auto;
+    padding-right: 8px; /* espacio para la barra de scroll */
+}
+
+/* Estilos sencillos para la barra de desplazamiento del panel */
+.panel-list::-webkit-scrollbar {
+    width: 8px;
+}
+.panel-list::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.06);
+    border-radius: 8px;
+}
+.panel-list::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 .panel-item {

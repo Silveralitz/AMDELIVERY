@@ -205,7 +205,8 @@ function renderOffers() {
 
 function updateCounts() {
     favoritesToggle.dataset.count = state.favorites.length;
-    cartToggle.dataset.count = state.cart.length;
+    const cartItemCount = state.cart.reduce((sum, product) => sum + product.quantity, 0);
+    cartToggle.dataset.count = cartItemCount;
 }
 
 function renderPanel(panelName) {

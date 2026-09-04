@@ -137,17 +137,19 @@ body {
 .icon-btn::after {
     content: attr(data-count);
     position: absolute;
-    top: -4px;
-    right: -2px;
-    background: var(--accent);
+    top: 1px;
+    right: 1px;
+    background: #22c55e;
     color: #052e16;
-    font-size: 0.7rem;
-    min-width: 20px;
-    height: 20px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 17px;
+    height: 17px;
     border-radius: 999px;
     display: grid;
     place-items: center;
-    padding: 0 5px;
+    padding: 0 3px;
+    box-shadow: 0 0 0 2px var(--surface);
     opacity: 0;
 }
 
